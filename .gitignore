@@ -11,3 +11,20 @@ node_modules/
 dist/
 *.log
 .playwright-mcp/
+
+# Runtime data
+data/
+*.db
+*.sqlite
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Linting
+.ruff_cache/
+
+# Build
+build/
+*.spec
