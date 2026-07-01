@@ -50,8 +50,9 @@ class ComparisonPage:
                             on_submit=self._on_add_stock,
                             width=300,
                         ),
-                        ft.Wrap(
+                        ft.Row(
                             [self._build_stock_chip(s) for s in self.selected_stocks],
+                            wrap=True,
                             spacing=10,
                         ),
                     ],

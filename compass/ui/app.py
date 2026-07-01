@@ -8,7 +8,7 @@ UI 架構：
 """
 
 import flet as ft
-from typing import Optional
+from typing import Optional, Any
 
 from compass.ui.pages import (
     HomePage,
@@ -22,6 +22,20 @@ from compass.ui.pages import (
 )
 
 
+class State:
+    """Simple state holder — replaces ft.State (removed in Flet 0.85.x)."""
+    def __init__(self, default: Any = None):
+        self._value = default
+
+    @property
+    def value(self) -> Any:
+        return self._value
+
+    @value.setter
+    def value(self, val: Any) -> None:
+        self._value = val
+
+
 def create_app(page: ft.Page):
     """建立 Flet 應用程式"""
     page.title = "台股價值投資分析系統"
@@ -30,8 +44,8 @@ def create_app(page: ft.Page):
     page.window_height = 800
 
     # 狀態
-    current_page = ft.State("home")
-    current_stock_id = ft.State(None)
+    current_page = State("home")
+    current_stock_id = State(None)
 
     # 建立頁面實例
     home_page = HomePage(on_navigate=lambda route: navigate(route))
@@ -163,7 +177,7 @@ def create_app(page: ft.Page):
             spacing=0,
         ),
         width=220,
-        bgcolor=ft.Colors.SURFACE_VARIANT,
+        bgcolor=ft.Colors.SURFACE_CONTAINER,
         padding=10,
     )
 
@@ -177,7 +191,7 @@ def create_app(page: ft.Page):
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
         ),
         padding=10,
-        bgcolor=ft.Colors.SURFACE_VARIANT,
+        bgcolor=ft.Colors.SURFACE_CONTAINER,
     )
 
     # 主版面

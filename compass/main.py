@@ -11,7 +11,7 @@ from compass.ui.app import create_app
 
 def main():
     """啟動 Flet 應用程式"""
-    ft.app(target=create_app)
+    ft.run(main=create_app)
 
 
 if __name__ == "__main__":

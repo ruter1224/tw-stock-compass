@@ -13,6 +13,8 @@
 import flet as ft
 from typing import Callable, Optional
 
+from compass.ui.utils import border_all
+
 
 class CatalystPage:
     """催化劑儀表板"""
@@ -98,7 +100,7 @@ class CatalystPage:
             ),
             width=300,
             padding=15,
-            border=ft.border.all(1, color),
+            border=border_all(1, color),
             border_radius=10,
         )
 

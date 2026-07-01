@@ -141,7 +141,12 @@ class HomePage:
         if not rows:
             rows.append(
                 ft.DataRow(
-                    cells=[ft.DataCell(ft.Text("尚無關注股票", color=ft.Colors.GREY_600))]
+                    cells=[
+                        ft.DataCell(ft.Text("尚無關注股票", color=ft.Colors.GREY_600)),
+                        ft.DataCell(ft.Text("")),
+                        ft.DataCell(ft.Text("")),
+                        ft.DataCell(ft.Text("")),
+                    ]
                 )
             )
 

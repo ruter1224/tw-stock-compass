@@ -75,7 +75,12 @@ class ReviewPage:
             ),
             width=150,
             padding=15,
-            border=ft.border.all(1, color),
+            border=ft.border.Border(
+                left=ft.border.BorderSide(1, color),
+                right=ft.border.BorderSide(1, color),
+                top=ft.border.BorderSide(1, color),
+                bottom=ft.border.BorderSide(1, color),
+            ),
             border_radius=10,
         )
 
@@ -104,7 +109,14 @@ class ReviewPage:
         if not rows:
             rows.append(
                 ft.DataRow(
-                    cells=[ft.DataCell(ft.Text("尚無交易紀錄", color=ft.Colors.GREY_600))]
+                    cells=[
+                        ft.DataCell(ft.Text("尚無交易紀錄", color=ft.Colors.GREY_600)),
+                        ft.DataCell(ft.Text("")),
+                        ft.DataCell(ft.Text("")),
+                        ft.DataCell(ft.Text("")),
+                        ft.DataCell(ft.Text("")),
+                        ft.DataCell(ft.Text("")),
+                    ]
                 )
             )
 

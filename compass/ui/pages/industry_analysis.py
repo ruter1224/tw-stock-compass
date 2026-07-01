@@ -13,6 +13,8 @@
 import flet as ft
 from typing import Callable, Optional
 
+from compass.ui.utils import border_all
+
 
 class IndustryAnalysisPage:
     """產業分析頁"""
@@ -109,7 +111,7 @@ class IndustryAnalysisPage:
             ),
             width=200,
             padding=20,
-            border=ft.border.all(1, ft.Colors.GREY_300),
+            border=border_all(1, ft.Colors.GREY_300),
             border_radius=10,
         )
 

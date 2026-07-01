@@ -126,7 +126,12 @@ class AllocationPage:
             ),
             width=150,
             padding=15,
-            border=ft.border.all(1, color),
+            border=ft.border.Border(
+                left=ft.border.BorderSide(1, color),
+                right=ft.border.BorderSide(1, color),
+                top=ft.border.BorderSide(1, color),
+                bottom=ft.border.BorderSide(1, color),
+            ),
             border_radius=10,
         )
 

@@ -14,6 +14,8 @@
 import flet as ft
 from typing import Callable, Optional
 
+from compass.ui.utils import border_all
+
 from compass.core.dimensions import FiveDimensions, DimensionScore
 from compass.core.target_pe import TargetPEResult, TargetPECalculator
 from compass.core.safety_zone import DualTrackSafetyZone, SafetyZoneCalculator
@@ -138,7 +140,7 @@ class StockAnalysisPage:
             ),
             width=120,
             padding=10,
-            border=ft.border.all(1, ft.Colors.GREY_300),
+            border=border_all(1, ft.Colors.GREY_300),
             border_radius=5,
         )
 
@@ -227,7 +229,7 @@ class StockAnalysisPage:
                 spacing=5,
             ),
             padding=15,
-            border=ft.border.all(1, ft.Colors.GREY_300),
+            border=border_all(1, ft.Colors.GREY_300),
             border_radius=5,
         )
 
