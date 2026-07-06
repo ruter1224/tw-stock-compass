@@ -28,3 +28,11 @@
 1. 釐清需求後先提案，經確認後再實作
 2. 每次改動後跑 lint 與測試
 3. 完成後提供 Done / Changed / Verified / Notes / Next 格式回報
+
+## 檢查命令
+
+每次修改程式碼後，必須自動執行以下命令驗證：
+
+- `ruff check .` — 語法與風格檢查
+- `pytest` — 測試
+- `pyright` — 型別檢查
