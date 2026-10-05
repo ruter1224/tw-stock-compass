@@ -2,11 +2,10 @@
 目標 PE 定價測試
 """
 
-import pytest
 from compass.core.dimensions import (
-    FiveDimensions,
-    DimensionScore,
     DimensionLevel,
+    DimensionScore,
+    FiveDimensions,
 )
 from compass.core.target_pe import TargetPECalculator, Tier
 

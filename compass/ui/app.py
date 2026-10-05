@@ -7,18 +7,19 @@ UI 架構：
 - 底部狀態列（資料更新時間、快取狀態）
 """
 
+from typing import Any
+
 import flet as ft
-from typing import Optional, Any
 
 from compass.ui.pages import (
-    HomePage,
-    StockAnalysisPage,
-    IndustryAnalysisPage,
+    AllocationPage,
     CatalystPage,
     ComparisonPage,
-    AllocationPage,
+    HomePage,
+    IndustryAnalysisPage,
     ReviewPage,
     SettingsPage,
+    StockAnalysisPage,
 )
 
 
@@ -40,8 +41,8 @@ def create_app(page: ft.Page):
     """建立 Flet 應用程式"""
     page.title = "台股價值投資分析系統"
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.window_width = 1280
-    page.window_height = 800
+    page.window.width = 1280
+    page.window.height = 800
 
     # 狀態
     current_page = State("home")

@@ -11,14 +11,14 @@
 - 操作按鈕
 """
 
-import flet as ft
 from typing import Callable, Optional
 
-from compass.ui.utils import border_all
+import flet as ft
 
-from compass.core.dimensions import FiveDimensions, DimensionScore
-from compass.core.target_pe import TargetPEResult, TargetPECalculator
+from compass.core.dimensions import DimensionScore, FiveDimensions
 from compass.core.safety_zone import DualTrackSafetyZone, SafetyZoneCalculator
+from compass.core.target_pe import TargetPECalculator, TargetPEResult
+from compass.ui.utils import border_all
 
 
 class StockAnalysisPage:
@@ -71,26 +71,23 @@ class StockAnalysisPage:
 
     def _build_header(self) -> ft.Control:
         """股票資訊標頭"""
+        left_column_controls: list[ft.Control] = [
+            ft.Text(self.stock_id or "", size=24, weight=ft.FontWeight.BOLD),
+            ft.Text(self.company_name, size=16),
+        ]
+        right_column_controls: list[ft.Control] = [
+            ft.Text(f"NT$ {self.current_price:.2f}", size=20, weight=ft.FontWeight.BOLD),
+            ft.Text(self.industry, size=14, color=ft.Colors.GREY_600),
+        ]
+        header_row_controls: list[ft.Control] = [
+            ft.Column(left_column_controls, spacing=5),
+            ft.VerticalDivider(),
+            ft.Column(right_column_controls, spacing=5),
+        ]
         return ft.Card(
             content=ft.Container(
                 content=ft.Row(
-                    [
-                        ft.Column(
-                            [
-                                ft.Text(self.stock_id, size=24, weight=ft.FontWeight.BOLD),
-                                ft.Text(self.company_name, size=16),
-                            ],
-                            spacing=5,
-                        ),
-                        ft.VerticalDivider(),
-                        ft.Column(
-                            [
-                                ft.Text(f"NT$ {self.current_price:.2f}", size=20, weight=ft.FontWeight.BOLD),
-                                ft.Text(self.industry, size=14, color=ft.Colors.GREY_600),
-                            ],
-                            spacing=5,
-                        ),
-                    ],
+                    header_row_controls,
                     alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                 ),
                 padding=20,
@@ -166,7 +163,11 @@ class StockAnalysisPage:
                                 ft.Column(
                                     [
                                         ft.Text("目標 PE 區間", size=12, color=ft.Colors.GREY_600),
-                                        ft.Text(self.target_pe_result.pe_range.range_str, size=16, weight=ft.FontWeight.BOLD),
+                                        ft.Text(
+                                            self.target_pe_result.pe_range.range_str,
+                                            size=16,
+                                            weight=ft.FontWeight.BOLD,
+                                        ),
                                     ],
                                     spacing=5,
                                 ),
@@ -235,24 +236,25 @@ class StockAnalysisPage:
 
     def _build_action_buttons(self) -> ft.Control:
         """操作按鈕"""
+        action_controls: list[ft.Control] = [
+            ft.FilledButton(
+                "查看產業詳情",
+                icon=ft.Icons.BUSINESS,
+                on_click=lambda e: self.on_navigate(f"industry_analysis:{self.stock_id}"),
+            ),
+            ft.FilledButton(
+                "查看催化劑",
+                icon=ft.Icons.TRENDING_UP,
+                on_click=lambda e: self.on_navigate(f"catalyst:{self.stock_id}"),
+            ),
+            ft.OutlinedButton(
+                "匯出 HTML",
+                icon=ft.Icons.DOWNLOAD,
+                on_click=self._on_export_html,
+            ),
+        ]
         return ft.Row(
-            [
-                ft.ElevatedButton(
-                    "查看產業詳情",
-                    icon=ft.Icons.BUSINESS,
-                    on_click=lambda e: self.on_navigate(f"industry_analysis:{self.stock_id}"),
-                ),
-                ft.ElevatedButton(
-                    "查看催化劑",
-                    icon=ft.Icons.TRENDING_UP,
-                    on_click=lambda e: self.on_navigate(f"catalyst:{self.stock_id}"),
-                ),
-                ft.OutlinedButton(
-                    "匯出 HTML",
-                    icon=ft.Icons.DOWNLOAD,
-                    on_click=self._on_export_html,
-                ),
-            ],
+            action_controls,
             spacing=10,
         )
 

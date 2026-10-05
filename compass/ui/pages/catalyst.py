@@ -10,8 +10,9 @@
 - 歷史訊號紀錄
 """
 
-import flet as ft
 from typing import Callable, Optional
+
+import flet as ft
 
 from compass.ui.utils import border_all
 

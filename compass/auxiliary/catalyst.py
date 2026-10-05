@@ -8,9 +8,9 @@
 """
 
 from dataclasses import dataclass
+from datetime import date
 from enum import Enum
 from typing import Optional
-from datetime import date
 
 
 class CatalystType(Enum):
@@ -34,7 +34,7 @@ class CatalystSignal:
     name: str
     description: str
     strength: CatalystStrength
-    date: Optional[date] = None
+    signal_date: Optional[date] = None
     data_source: Optional[str] = None
 
 
@@ -75,7 +75,7 @@ class CatalystAnalyzer:
                     name="法說會日程",
                     description=f"法說會將於 {investor_conference_date} 舉行",
                     strength=CatalystStrength.MODERATE,
-                    date=investor_conference_date,
+                    signal_date=investor_conference_date,
                 )
             )
 

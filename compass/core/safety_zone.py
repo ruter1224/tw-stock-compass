@@ -45,7 +45,7 @@ class PriceZoneRange:
 
     @property
     def expensive_range(self) -> str:
-        return f"{self.excessive_low:.0f} 元以上"
+        return f"{self.expensive_low:.0f} 元以上"
 
 
 @dataclass
@@ -217,9 +217,18 @@ class SafetyZoneCalculator:
             )
 
         # 計算綜合區間
-        combined_cheap = f"{min(margin_result.price_zones.cheap_low, dcf_result.price_zones.cheap_low):.0f}-{max(margin_result.price_zones.cheap_high, dcf_result.price_zones.cheap_high):.0f} 元"
-        combined_fair = f"{min(margin_result.price_zones.fair_low, dcf_result.price_zones.fair_low):.0f}-{max(margin_result.price_zones.fair_high, dcf_result.price_zones.fair_high):.0f} 元"
-        combined_expensive = f"{min(margin_result.price_zones.excessive_low, dcf_result.price_zones.excessive_low):.0f} 元以上"
+        cheap_low = min(margin_result.price_zones.cheap_low, dcf_result.price_zones.cheap_low)
+        cheap_high = max(margin_result.price_zones.cheap_high, dcf_result.price_zones.cheap_high)
+        combined_cheap = f"{cheap_low:.0f}-{cheap_high:.0f} 元"
+
+        fair_low = min(margin_result.price_zones.fair_low, dcf_result.price_zones.fair_low)
+        fair_high = max(margin_result.price_zones.fair_high, dcf_result.price_zones.fair_high)
+        combined_fair = f"{fair_low:.0f}-{fair_high:.0f} 元"
+
+        expensive_low = min(
+            margin_result.price_zones.expensive_low, dcf_result.price_zones.expensive_low
+        )
+        combined_expensive = f"{expensive_low:.0f} 元以上"
 
         return DualTrackSafetyZone(
             margin_of_safety=margin_result,

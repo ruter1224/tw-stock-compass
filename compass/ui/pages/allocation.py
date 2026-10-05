@@ -10,8 +10,11 @@
 - 情境說明
 """
 
+from typing import Callable
+
 import flet as ft
-from typing import Callable, Optional
+
+from compass.auxiliary.allocation import AllocationResult, AssetAllocationAdvisor, RiskScenario
 
 
 class AllocationPage:
@@ -98,14 +101,20 @@ class AllocationPage:
                         ft.Text("配置建議", size=18, weight=ft.FontWeight.BOLD),
                         ft.Row(
                             [
-                                self._build_allocation_item("台股", allocation["tw_stock"], ft.Colors.BLUE),
-                                self._build_allocation_item("海外核心", allocation["overseas_core"], ft.Colors.GREEN),
-                                self._build_allocation_item("海外避險", allocation["overseas_hedge"], ft.Colors.ORANGE),
+                                self._build_allocation_item(
+                                    "台股", allocation.tw_stock_ratio, ft.Colors.BLUE
+                                ),
+                                self._build_allocation_item(
+                                    "海外核心", allocation.overseas_core_ratio, ft.Colors.GREEN
+                                ),
+                                self._build_allocation_item(
+                                    "海外避險", allocation.overseas_hedge_ratio, ft.Colors.ORANGE
+                                ),
                             ],
                             spacing=20,
                         ),
                         ft.Divider(),
-                        ft.Text(self._get_recommendation(), size=14, color=ft.Colors.GREY_700),
+                        ft.Text(allocation.recommendation, size=14, color=ft.Colors.GREY_700),
                     ],
                     spacing=15,
                 ),
@@ -135,36 +144,15 @@ class AllocationPage:
             border_radius=10,
         )
 
-    def _calculate_allocation(self) -> dict:
+    def _calculate_allocation(self) -> AllocationResult:
         """計算配置"""
-        # 根據年齡決定風險屬性
-        if self.age < 30:
-            risk_profile = "aggressive"
-        elif self.age < 40:
-            risk_profile = "adventurous"
-        elif self.age < 50:
-            risk_profile = "balanced"
-        elif self.age < 60:
-            risk_profile = "conservative"
-        else:
-            risk_profile = "very_conservative"
-
-        # 根據風險情境調整
-        if self.risk_scenario == "low":
-            return {"tw_stock": 25, "overseas_core": 65, "overseas_hedge": 10}
-        elif self.risk_scenario == "medium":
-            return {"tw_stock": 15, "overseas_core": 55, "overseas_hedge": 30}
-        else:
-            return {"tw_stock": 5, "overseas_core": 45, "overseas_hedge": 50}
-
-    def _get_recommendation(self) -> str:
-        """取得建議"""
-        if self.risk_scenario == "low":
-            return "維持正常成長型配置，定期檢視投資組合。"
-        elif self.risk_scenario == "medium":
-            return "建議減碼台股，增加海外避險資產，降低風險曝險。"
-        else:
-            return "建議集中美元現金、T-Bill、黃金，大幅降低台股曝險。"
+        scenario_map = {
+            "low": RiskScenario.LOW,
+            "medium": RiskScenario.MEDIUM,
+            "high": RiskScenario.HIGH,
+        }
+        scenario = scenario_map.get(self.risk_scenario, RiskScenario.LOW)
+        return AssetAllocationAdvisor.calculate(self.age, scenario)
 
     def _on_age_change(self, e):
         """年齡變更"""

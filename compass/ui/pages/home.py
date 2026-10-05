@@ -10,8 +10,9 @@
 - 系統通知
 """
 
+from typing import Callable
+
 import flet as ft
-from typing import Callable, Optional
 
 
 class HomePage:
@@ -166,10 +167,10 @@ class HomePage:
                         ),
                         ft.DataTable(
                             columns=[
-                                ft.DataColumn(ft.Text("代號")),
-                                ft.DataColumn(ft.Text("名稱")),
-                                ft.DataColumn(ft.Text("股價"), numeric=True),
-                                ft.DataColumn(ft.Text("漲跌"), numeric=True),
+                                ft.DataColumn(label=ft.Text("代號")),
+                                ft.DataColumn(label=ft.Text("名稱")),
+                                ft.DataColumn(label=ft.Text("股價"), numeric=True),
+                                ft.DataColumn(label=ft.Text("漲跌"), numeric=True),
                             ],
                             rows=rows,
                         ),

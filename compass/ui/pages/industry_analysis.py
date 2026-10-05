@@ -10,8 +10,9 @@
 - 杜邦分析圖
 """
 
-import flet as ft
 from typing import Callable, Optional
+
+import flet as ft
 
 from compass.ui.utils import border_all
 

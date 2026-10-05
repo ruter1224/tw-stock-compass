@@ -2,16 +2,15 @@
 五大維度評分測試
 """
 
-import pytest
 from compass.core.dimensions import (
-    FiveDimensions,
-    DimensionScore,
     DimensionLevel,
-    evaluate_supply_chain_position,
+    DimensionScore,
+    FiveDimensions,
+    evaluate_financial_model,
     evaluate_industry_growth,
     evaluate_moat,
-    evaluate_financial_model,
     evaluate_risk_discount,
+    evaluate_supply_chain_position,
 )
 
 

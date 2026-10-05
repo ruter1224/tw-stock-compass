@@ -10,8 +10,9 @@
 - 進度條
 """
 
+from typing import Callable
+
 import flet as ft
-from typing import Callable, Optional
 
 
 class ComparisonPage:
@@ -102,13 +103,13 @@ class ComparisonPage:
                         ft.Text("比較結果", size=18, weight=ft.FontWeight.BOLD),
                         ft.DataTable(
                             columns=[
-                                ft.DataColumn(ft.Text("代號")),
-                                ft.DataColumn(ft.Text("產業鏈地位")),
-                                ft.DataColumn(ft.Text("產業成長性")),
-                                ft.DataColumn(ft.Text("企業護城河")),
-                                ft.DataColumn(ft.Text("財務模式")),
-                                ft.DataColumn(ft.Text("風險因子")),
-                                ft.DataColumn(ft.Text("總分")),
+                                ft.DataColumn(label=ft.Text("代號")),
+                                ft.DataColumn(label=ft.Text("產業鏈地位")),
+                                ft.DataColumn(label=ft.Text("產業成長性")),
+                                ft.DataColumn(label=ft.Text("企業護城河")),
+                                ft.DataColumn(label=ft.Text("財務模式")),
+                                ft.DataColumn(label=ft.Text("風險因子")),
+                                ft.DataColumn(label=ft.Text("總分")),
                             ],
                             rows=rows,
                         ),

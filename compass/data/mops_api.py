@@ -11,7 +11,8 @@ FinMind 提供結構化的財務數據，比直接爬取 MOPS 更穩定。
 
 from dataclasses import dataclass
 from datetime import date
-from typing import Optional
+from typing import Any, Optional
+
 import pandas as pd
 from FinMind.data import DataLoader
 
@@ -226,7 +227,7 @@ class MOPSAPI:
                 results.append(
                     BalanceSheetData(
                         stock_id=stock_id,
-                        date=dt if isinstance(dt, date) else pd.to_datetime(dt).date(),
+                        date=dt if isinstance(dt, date) else pd.to_datetime(str(dt)).date(),
                         total_assets=total_assets,
                         total_liabilities=total_liabilities,
                         total_equity=total_equity,
@@ -286,7 +287,7 @@ class MOPSAPI:
                 results.append(
                     CashFlowData(
                         stock_id=stock_id,
-                        date=dt if isinstance(dt, date) else pd.to_datetime(dt).date(),
+                        date=dt if isinstance(dt, date) else pd.to_datetime(str(dt)).date(),
                         operating_cash_flow=operating_cf,
                         investing_cash_flow=investing_cf,
                         financing_cash_flow=financing_cf,
@@ -320,7 +321,10 @@ class MOPSAPI:
                 origin_name = str(row.get("origin_name", ""))
                 for field_name in field_names:
                     if field_name in origin_name:
-                        return float(row.get("value", 0))
+                        value: Any = row.get("value", 0)
+                        if value is None:
+                            return 0.0
+                        return float(value)
 
             return 0.0
         except Exception:
@@ -343,7 +347,10 @@ class MOPSAPI:
                 origin_name = str(row.get("origin_name", ""))
                 for field_name in field_names:
                     if field_name in origin_name:
-                        return float(row.get("value", 0))
+                        value: Any = row.get("value", 0)
+                        if value is None:
+                            return 0.0
+                        return float(value)
             return 0.0
         except Exception:
             return 0.0

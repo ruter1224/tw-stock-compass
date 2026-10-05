@@ -4,11 +4,11 @@ SQLite 資料快取
 所有資料擷取後快取至本地 SQLite，避免重複 fetch，並支援離線查看最近已查資料。
 """
 
+import json
 import sqlite3
 from datetime import date, datetime
 from pathlib import Path
-from typing import Optional, Any
-import json
+from typing import Any, Optional
 
 
 class DataCache:
@@ -143,7 +143,16 @@ class DataCache:
                 (datetime.now().isoformat(),),
             )
 
-    def save_stock_price(self, stock_id: str, date: date, open: float, high: float, low: float, close: float, volume: int):
+    def save_stock_price(
+        self,
+        stock_id: str,
+        date: date,
+        open: float,
+        high: float,
+        low: float,
+        close: float,
+        volume: int,
+    ):
         """儲存股價資料"""
         with sqlite3.connect(self.db_path) as conn:
             conn.execute(

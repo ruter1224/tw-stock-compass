@@ -1,5 +1,6 @@
-import flet as ft
 from typing import Union
+
+import flet as ft
 
 
 def border_all(width: Union[int, float], color: str) -> ft.Border:

@@ -10,8 +10,9 @@
 - 匯入按鈕
 """
 
+from typing import Callable
+
 import flet as ft
-from typing import Callable, Optional
 
 
 class ReviewPage:
@@ -36,15 +37,16 @@ class ReviewPage:
 
     def _build_header(self) -> ft.Control:
         """標頭"""
+        header_controls: list[ft.Control] = [
+            ft.Text("復盤系統", size=24, weight=ft.FontWeight.BOLD),
+            ft.FilledButton(
+                "新增交易",
+                icon=ft.Icons.ADD,
+                on_click=self._on_add_trade,
+            ),
+        ]
         return ft.Row(
-            [
-                ft.Text("復盤系統", size=24, weight=ft.FontWeight.BOLD),
-                ft.ElevatedButton(
-                    "新增交易",
-                    icon=ft.Icons.ADD,
-                    on_click=self._on_add_trade,
-                ),
-            ],
+            header_controls,
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
         )
 
@@ -95,7 +97,9 @@ class ReviewPage:
                         ft.DataCell(
                             ft.TextButton(
                                 record.get("stock_id", ""),
-                                on_click=lambda e, sid=record.get("stock_id"): self.on_navigate(f"stock_analysis:{sid}"),
+                                on_click=lambda e, sid=record.get("stock_id"): self.on_navigate(
+                                    f"stock_analysis:{sid}"
+                                ),
                             )
                         ),
                         ft.DataCell(ft.Text(record.get("type", ""))),
@@ -127,12 +131,12 @@ class ReviewPage:
                         ft.Text("交易紀錄", size=18, weight=ft.FontWeight.BOLD),
                         ft.DataTable(
                             columns=[
-                                ft.DataColumn(ft.Text("日期")),
-                                ft.DataColumn(ft.Text("代號")),
-                                ft.DataColumn(ft.Text("類型")),
-                                ft.DataColumn(ft.Text("價格"), numeric=True),
-                                ft.DataColumn(ft.Text("數量"), numeric=True),
-                                ft.DataColumn(ft.Text("理由")),
+                                ft.DataColumn(label=ft.Text("日期")),
+                                ft.DataColumn(label=ft.Text("代號")),
+                                ft.DataColumn(label=ft.Text("類型")),
+                                ft.DataColumn(label=ft.Text("價格"), numeric=True),
+                                ft.DataColumn(label=ft.Text("數量"), numeric=True),
+                                ft.DataColumn(label=ft.Text("理由")),
                             ],
                             rows=rows,
                         ),
